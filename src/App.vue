@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <div>
+      <!-- 路由匹配到的组件将渲染在这里 -->
+  
+    <div  v-show="showAnimation">
       <el-button @click="show =!show">fade淡入淡出</el-button>
       <div style="display:flex;margin-top:20px;height:100px;">
         <transition name="el-fade-in-linear">
@@ -41,18 +43,31 @@
    </div>
 
   </div>
+      <router-view v-show="!showAnimation"></router-view>
+      <custom-footer v-on:updateView="refreshView"></custom-footer>
   </div>
 </template>
 
 <script>
+import CustomFooter from "./components/CustomFooter.vue";
 export default {
   name: "app",
+  components: {
+    CustomFooter
+  },
+
   data: function() {
     return {
       show: true,
       showSecond: true,
-      showThird: true
+      showThird: true,
+      showAnimation: true
     };
+  },
+  methods: {
+    refreshView(flag) {
+      this.showAnimation = flag;
+    }
   }
 };
 </script>
